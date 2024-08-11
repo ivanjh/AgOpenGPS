@@ -1,5 +1,6 @@
 ﻿//Please, if you use this, share the improvements
 
+using AgOpenGPS.Classes;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -112,6 +113,8 @@ namespace AgOpenGPS
         public bool isMaxAngularVelocity = false;
 
         public int minSteerSpeedTimer = 0;
+
+        private CSteerInferrer si = new CSteerInferrer();
 
         public void UpdateFixPosition()
         {
@@ -686,6 +689,9 @@ namespace AgOpenGPS
                             pn.fix.easting = (Math.Cos(-fixHeading) * vehicle.antennaOffset) + pn.fix.easting;
                             pn.fix.northing = (Math.Sin(-fixHeading) * vehicle.antennaOffset) + pn.fix.northing;
                         }
+
+                        // Sensorless steering inference from Fix+Heading+Wheelbase
+                        mc.actualSteerAngleDegrees = si.InferSteeringDegrees(pn.fix.northing, pn.fix.easting, pn.headingTrueDual, vehicle.wheelbase);
 
                         if (ahrs.imuRoll != 88888 && vehicle.antennaHeight != 0)
                         {
