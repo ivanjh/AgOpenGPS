@@ -315,6 +315,8 @@ namespace AgIO
 
                 float.TryParse(words[6], NumberStyles.Float, CultureInfo.InvariantCulture, out rollK);
 
+                float.TryParse(words[7], NumberStyles.Float, CultureInfo.InvariantCulture, out headingTrue); // Course over ground
+                headingTrueData = headingTrue;
                 float.TryParse(words[8], NumberStyles.Float, CultureInfo.InvariantCulture, out speed);
                 speedData = speed;
 
